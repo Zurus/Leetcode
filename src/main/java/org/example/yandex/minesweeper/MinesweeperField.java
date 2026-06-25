@@ -25,6 +25,8 @@ import java.io.*;
 
 public class MinesweeperField {
 
+    private static final int MINE = -1;
+
     private static int[][] nums = {
             {-1, -1}, {-1, 0}, {-1, +1},
             {0, -1}, {0, +1},
@@ -45,19 +47,33 @@ public class MinesweeperField {
     }
 
     public void addMine(int i, int j) {
-        if (field[i][j] != -1) {
-            field[i][j] = -1;
+        if (field[i][j] != MINE) {
+            field[i][j] = MINE;
             fillIncrement(i, j);
         }
     }
 
     private void fillIncrement(int i, int j) {
         for (int[] pos : nums) {
-            if (include(i + pos[0], j + pos[1]) && field[i + pos[0]][j + pos[1]] != -1) {
+            if (include(i + pos[0], j + pos[1]) && field[i + pos[0]][j + pos[1]] != MINE) {
                 field[i + pos[0]][j + pos[1]]++;
             }
         }
     }
+
+    private void fillIncrementAlternate(int i, int j) {
+        for (int dr = -1; dr <= 1; dr++) {
+            for (int dc = -1; dc <= 1; dc++) {
+                if (dr == 0 && dc == 0) continue;
+                int r = i + dr;
+                int c = j + dc;
+                if (r >= 0 && r < rows && c >= 0 && c < cols && field[r][c] != MINE) {
+                    field[r][c]++;
+                }
+            }
+        }
+    }
+
 
     private boolean include(int i, int j) {
         return i >= 0 && i < rows && j >= 0 && j < cols;
