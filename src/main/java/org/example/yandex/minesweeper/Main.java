@@ -1,5 +1,7 @@
 package org.example.yandex.minesweeper;
 
+import org.example.utils.ArrayUtils;
+
 import java.io.*;
 
 public class Main {
@@ -20,7 +22,7 @@ public class Main {
             minesweeperField.addMine(coords[0] - 1, coords[1] - 1);
         }
 
-        minesweeperField.print();
+        ArrayUtils.printArray(minesweeperField.getField());
         reader.close();
         writer.close();
     }

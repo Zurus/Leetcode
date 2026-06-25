@@ -79,13 +79,7 @@ public class MinesweeperField {
         return i >= 0 && i < rows && j >= 0 && j < cols;
     }
 
-    public void print() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                System.out.print(field[i][j] == -1 ? '*' : field[i][j]);
-                if (j < cols - 1) System.out.print(' ');
-            }
-            System.out.println();
-        }
+    public int[][] getField() {
+        return field;
     }
 }
