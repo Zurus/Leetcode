@@ -1,8 +1,7 @@
-package org.example.yandex;
+package org.example.yandex.minesweeper;
 
 
 import java.io.*;
-import java.util.Arrays;
 
 /**
  * Класс для построения игрового поля "Сапёр" по заданным размерам и координатам мин.
@@ -25,6 +24,13 @@ import java.util.Arrays;
  */
 
 public class MinesweeperField {
+
+    private static int[][] nums = {
+            {-1, -1}, {-1, 0}, {-1, +1},
+            {0, -1}, {0, +1},
+            {+1, -1}, {+1, 0}, {+1, +1}
+    };
+
     private final int rows;
     private final int cols;
     private final int[][] field;
@@ -38,66 +44,23 @@ public class MinesweeperField {
         this.field = new int[rows][cols];
     }
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
-
-        String[] str = reader.readLine().split(" ");
-        int n = Integer.parseInt(str[0]);
-        int m = Integer.parseInt(str[1]);
-        int k = Integer.parseInt(str[2]);
-
-        MinesweeperField minesweeperField = new MinesweeperField(n, m);
-        minesweeperField.fill();
-
-        for (int i = 0; i < k; i++) {
-            int[] coords = parseCoordinates(reader.readLine());
-            minesweeperField.addMine(coords[0] - 1, coords[1] - 1);
-        }
-
-        minesweeperField.print();
-        reader.close();
-        writer.close();
-    }
-
-    private static int[] parseCoordinates(String line) {
-        String[] parts = line.trim().split("\\s+");
-        if (parts.length != 2) {
-            throw new IllegalArgumentException("Некорректная строка координат: " + line);
-        }
-        return new int[] {
-                Integer.parseInt(parts[0]),
-                Integer.parseInt(parts[1])
-        };
-    }
-
     public void addMine(int i, int j) {
-        field[i][j] = -1;
-        fillIncrement(i, j);
-    }
-
-    private void fill() {
-        for (int i = 0; i < rows; i++) {
-            Arrays.fill(field[i], 0);
+        if (field[i][j] != -1) {
+            field[i][j] = -1;
+            fillIncrement(i, j);
         }
     }
 
     private void fillIncrement(int i, int j) {
-        int[][] nums = {
-                {i - 1, j - 1}, {i - 1, j}, {i - 1, j + 1},
-                {i, j - 1},                 {i, j + 1},
-                {i + 1, j - 1}, {i + 1, j}, {i + 1, j + 1}
-        };
-
         for (int[] pos : nums) {
-            if (include(field, pos[0], pos[1]) && field[pos[0]][pos[1]] != -1) {
-                field[pos[0]][pos[1]]++;
+            if (include(i + pos[0], j + pos[1]) && field[i + pos[0]][j + pos[1]] != -1) {
+                field[i + pos[0]][j + pos[1]]++;
             }
         }
     }
 
-    private static boolean include(int[][] arr, int i, int j) {
-        return i >= 0 && i < arr.length && j >= 0 && j < arr[i].length;
+    private boolean include(int i, int j) {
+        return i >= 0 && i < rows && j >= 0 && j < cols;
     }
 
     public void print() {
