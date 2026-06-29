@@ -25,17 +25,15 @@ public class Main {
 
         visited = new boolean[n];
 
-        for (int i = 0; i < n; i++) {
-            DeepSearch deepSearch = graphs[i];
-            if (!visited[i]) {
-                deepSearch(deepSearch);
-            }
-        }
+        DeepSearch deepSearch = graphs[0];
+        deepSearch(deepSearch);
+        visited[0] = true;
         int count = 0;
         for (int i = 0; i < visited.length; i++) {
             if (visited[i]) count++;
         }
         System.out.println(count);
+
         for (int i = 0; i < visited.length; i++) {
             if (visited[i]) {
                 System.out.print(i + 1 + " ");
@@ -49,7 +47,12 @@ public class Main {
     private static void deepSearch(DeepSearch deepSearch) {
         if (!visited[deepSearch.getIdx() - 1] && !deepSearch.isEmpty()) {
             visited[deepSearch.getIdx() - 1] = true;
-            deepSearch.getNeighbors().forEach(Main::deepSearch);
+            List<DeepSearch> list = deepSearch.getNeighbors();
+            for (int i = 0; i < list.size(); i++) {
+                DeepSearch neib = list.get(i);
+                if (deepSearch.isSameDeep(neib)) continue;
+                deepSearch(neib);
+            }
         }
     }
 
@@ -76,7 +79,7 @@ public class Main {
 
         public void add(DeepSearch deepSearch, boolean recursive) {
             neighbors.add(deepSearch);
-            if (recursive) {
+            if (recursive && !isSameDeep(deepSearch)) {
                 deepSearch.add(this, false);
             }
         }
@@ -92,6 +95,9 @@ public class Main {
         public boolean isEmpty() {
             return neighbors.isEmpty();
         }
-    }
 
+        public boolean isSameDeep(DeepSearch deepSearch) {
+            return idx == deepSearch.getIdx();
+        }
+    }
 }
