@@ -1,15 +1,10 @@
-package org.example.yandex.graph;
-
-import org.example.yandex.graph.deepsearch.DeepSearch;
+package org.example.yandex.graph.deepsearch;
 
 import java.io.*;
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Queue;
+import java.util.*;
 
 public class Main {
 
-    private static Queue<DeepSearch> children = new ArrayDeque<>();
     private static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
@@ -25,7 +20,7 @@ public class Main {
 
         for (int i = 0; i < m; i++) {
             data = splitString(reader.readLine());
-            graphs[data[0] - 1].add(graphs[data[1] - 1]);
+            graphs[data[0] - 1].add(graphs[data[1] - 1], true);
         }
 
         visited = new boolean[n];
@@ -46,7 +41,7 @@ public class Main {
                 System.out.print(i + 1 + " ");
             }
         }
-
+        System.out.println();
         reader.close();
         writer.close();
     }
@@ -64,6 +59,39 @@ public class Main {
                 .filter(s -> !s.isEmpty())
                 .map(Integer::parseInt)
                 .toArray(Integer[]::new);
+    }
+
+    public static class DeepSearch {
+        private int idx;
+        private List<DeepSearch> neighbors;
+
+        public DeepSearch(int idx) {
+            this.idx = idx;
+            neighbors = new ArrayList<>();
+        }
+
+        public int getIdx() {
+            return idx;
+        }
+
+        public void add(DeepSearch deepSearch, boolean recursive) {
+            neighbors.add(deepSearch);
+            if (recursive) {
+                deepSearch.add(this, false);
+            }
+        }
+
+        public void add(DeepSearch deepSearch) {
+            add(deepSearch, false);
+        }
+
+        public List<DeepSearch> getNeighbors() {
+            return neighbors;
+        }
+
+        public boolean isEmpty() {
+            return neighbors.isEmpty();
+        }
     }
 
 }
