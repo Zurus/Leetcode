@@ -43,6 +43,18 @@ public class CouponsDynamic {
     }
 
 
+    private int findBestJ() {
+        int bestJ = 0;
+        int min = Integer.MAX_VALUE;
+        for (int j = 0; j <= n; j++) {
+            if (dp[n][j] <= min) {
+                bestJ++;
+                min = dp[n][j];
+            }
+        }
+        return bestJ;
+    }
+
     private static int minWithMarker(int a, int b) {
         if (a == EMPTY_VAL) return b;
         if (b == EMPTY_VAL) return a;
