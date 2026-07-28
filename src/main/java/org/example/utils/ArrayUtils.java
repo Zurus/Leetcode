@@ -24,6 +24,20 @@ public class ArrayUtils {
         }
     }
 
+    public static int[] parse(String data) {
+        return parse(data, "\\s+");  // разделитель — один или несколько любых пробельных символов
+    }
+
+    public static int[] parse(String data, String splitter) {
+        if (splitter == null || splitter.isEmpty()) {
+            splitter = "\\s+";
+        }
+        return Arrays.stream(data.split(splitter))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+    }
+
+
     public static void fillEmptyArray(int[][] array) {
         for (int[] row : array) {
             Arrays.fill(row, -1);

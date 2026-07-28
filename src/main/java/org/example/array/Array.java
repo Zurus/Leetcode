@@ -1,39 +1,38 @@
 package org.example.array;
 
 
-import org.apache.commons.lang3.time.StopWatch;
 
 import java.util.*;
 
 public class Array {
 
-    public static void main(String[] args) {
-        StopWatch stopWatch = new StopWatch();
-
-        for (int i = 0; i < 10; i++) {
-            System.out.println("Попытка №" + i);
-            int[] array = generateArray(new Random().nextInt(10));
-
-            stopWatch.reset();
-            stopWatch.start();
-            System.out.println(Arrays.toString(twoSum(array, 6)));
-            stopWatch.stop();
-            System.out.println("Прошло времени, мс: " + stopWatch.getNanoTime());
-
-            stopWatch.reset();
-            stopWatch.start();
-            Arrays.sort(array);
-            System.out.println(Arrays.toString(twoSumSorted(array, 6)));
-            stopWatch.stop();
-            System.out.println("Прошло времени, мс: " + stopWatch.getNanoTime());
-
-            stopWatch.reset();
-            stopWatch.start();
-            System.out.println(Arrays.toString(twoSum_secondVariant(array, 6)));
-            stopWatch.stop();
-            System.out.println("Прошло времени, мс: " + stopWatch.getNanoTime());
-        }
-    }
+//    public static void main(String[] args) {
+//        StopWatch stopWatch = new StopWatch();
+//
+//        for (int i = 0; i < 10; i++) {
+//            System.out.println("Попытка №" + i);
+//            int[] array = generateArray(new Random().nextInt(10));
+//
+//            stopWatch.reset();
+//            stopWatch.start();
+//            System.out.println(Arrays.toString(twoSum(array, 6)));
+//            stopWatch.stop();
+//            System.out.println("Прошло времени, мс: " + stopWatch.getNanoTime());
+//
+//            stopWatch.reset();
+//            stopWatch.start();
+//            Arrays.sort(array);
+//            System.out.println(Arrays.toString(twoSumSorted(array, 6)));
+//            stopWatch.stop();
+//            System.out.println("Прошло времени, мс: " + stopWatch.getNanoTime());
+//
+//            stopWatch.reset();
+//            stopWatch.start();
+//            System.out.println(Arrays.toString(twoSum_secondVariant(array, 6)));
+//            stopWatch.stop();
+//            System.out.println("Прошло времени, мс: " + stopWatch.getNanoTime());
+//        }
+//    }
 
     public static int[] generateArray(int len) {
         List<Integer> numbers = new ArrayList<>();
