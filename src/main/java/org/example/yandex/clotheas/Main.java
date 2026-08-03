@@ -1,13 +1,13 @@
 package org.example.yandex.clotheas;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+//import org.jfree.chart.ChartFactory;
+//import org.jfree.chart.ChartPanel;
+//import org.jfree.chart.JFreeChart;
+//import org.jfree.chart.plot.PlotOrientation;
+//import org.jfree.chart.plot.XYPlot;
+//import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+//import org.jfree.data.xy.XYSeries;
+//import org.jfree.data.xy.XYSeriesCollection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -66,7 +66,7 @@ public class Main {
         writer.close();
 
         // Показать визуализацию
-        showVisualization(colorTop, colorBot, minI, minJ, minDiff);
+//        showVisualization(colorTop, colorBot, minI, minJ, minDiff);
     }
 
     /**
@@ -74,88 +74,88 @@ public class Main {
      * 1. Положение всех точек на числовой оси (майки и штаны) с выделением найденной пары.
      * 2. График "галочки" – зависимость разности от j для фиксированного i = minI.
      */
-    public static void showVisualization(int[] tops, int[] bots,
-                                         int bestTopIdx, int bestBotIdx, int bestDiff) {
-        // Наборы данных для первого графика
-        XYSeries topSeries = new XYSeries("Майки (top)");
-        for (int i = 0; i < tops.length; i++) {
-            topSeries.add(tops[i], 0); // Y = 0
-        }
-        XYSeries botSeries = new XYSeries("Штаны (bottom)");
-        for (int j = 0; j < bots.length; j++) {
-            botSeries.add(bots[j], 1); // Y = 1
-        }
-
-        // Выделенная пара (соединим линией)
-        XYSeries pairSeries = new XYSeries("Выбранная пара (разница)");
-        pairSeries.add(tops[bestTopIdx], 0);
-        pairSeries.add(tops[bestTopIdx], 1); // вертикальная линия – разница
-        pairSeries.add(bots[bestBotIdx], 1); // горизонталь до штанов
-        // Можно добавить точку штанов на уровне 1
-
-        XYSeriesCollection collection1 = new XYSeriesCollection();
-        collection1.addSeries(topSeries);
-        collection1.addSeries(botSeries);
-        collection1.addSeries(pairSeries);
-
-        JFreeChart chart1 = ChartFactory.createScatterPlot(
-                "Положение цветов и выбранная пара",
-                "Цвет", "",
-                collection1,
-                PlotOrientation.VERTICAL, false, true, false);
-
-        XYPlot plot1 = chart1.getXYPlot();
-        XYLineAndShapeRenderer renderer1 = new XYLineAndShapeRenderer();
-        renderer1.setSeriesLinesVisible(0, false);
-        renderer1.setSeriesShapesVisible(0, true);
-        renderer1.setSeriesLinesVisible(1, false);
-        renderer1.setSeriesShapesVisible(1, true);
-        renderer1.setSeriesLinesVisible(2, true);
-        renderer1.setSeriesShapesVisible(2, false);
-        renderer1.setSeriesPaint(2, Color.RED);
-        renderer1.setSeriesStroke(2, new BasicStroke(2.0f));
-        plot1.setRenderer(renderer1);
-
-        // Второй график: галочка для фиксированного i = bestTopIdx
-        XYSeries diffSeries = new XYSeries("|top[i] - bot[j]| при i=" + tops[bestTopIdx]);
-        int fixedTop = tops[bestTopIdx];
-        for (int j = 0; j < bots.length; j++) {
-            diffSeries.add(j, Math.abs(fixedTop - bots[j]));
-        }
-        // Отметим точку найденного минимума
-        XYSeries minPoint = new XYSeries("Минимум (j=" + bestBotIdx + ")");
-        minPoint.add(bestBotIdx, Math.abs(fixedTop - bots[bestBotIdx]));
-
-        XYSeriesCollection collection2 = new XYSeriesCollection();
-        collection2.addSeries(diffSeries);
-        collection2.addSeries(minPoint);
-
-        JFreeChart chart2 = ChartFactory.createXYLineChart(
-                "График 'галочка' разности",
-                "Индекс j", "Разность",
-                collection2,
-                PlotOrientation.VERTICAL, false, true, false);
-
-        XYPlot plot2 = chart2.getXYPlot();
-        XYLineAndShapeRenderer renderer2 = new XYLineAndShapeRenderer();
-        renderer2.setSeriesShapesVisible(0, false);
-        renderer2.setSeriesLinesVisible(0, true);
-        renderer2.setSeriesShapesVisible(1, true);
-        renderer2.setSeriesLinesVisible(1, false);
-        renderer2.setSeriesPaint(1, Color.RED);
-        plot2.setRenderer(renderer2);
-
-        // Размещаем оба графика в одном окне вертикально
-        JPanel panel = new JPanel(new GridLayout(2, 1));
-        panel.add(new ChartPanel(chart1));
-        panel.add(new ChartPanel(chart2));
-
-        JFrame frame = new JFrame("Визуализация задачи о майках и штанах");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(panel);
-        frame.pack();
-        frame.setSize(800, 600);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
+//    public static void showVisualization(int[] tops, int[] bots,
+//                                         int bestTopIdx, int bestBotIdx, int bestDiff) {
+//        // Наборы данных для первого графика
+//        XYSeries topSeries = new XYSeries("Майки (top)");
+//        for (int i = 0; i < tops.length; i++) {
+//            topSeries.add(tops[i], 0); // Y = 0
+//        }
+//        XYSeries botSeries = new XYSeries("Штаны (bottom)");
+//        for (int j = 0; j < bots.length; j++) {
+//            botSeries.add(bots[j], 1); // Y = 1
+//        }
+//
+//        // Выделенная пара (соединим линией)
+//        XYSeries pairSeries = new XYSeries("Выбранная пара (разница)");
+//        pairSeries.add(tops[bestTopIdx], 0);
+//        pairSeries.add(tops[bestTopIdx], 1); // вертикальная линия – разница
+//        pairSeries.add(bots[bestBotIdx], 1); // горизонталь до штанов
+//        // Можно добавить точку штанов на уровне 1
+//
+//        XYSeriesCollection collection1 = new XYSeriesCollection();
+//        collection1.addSeries(topSeries);
+//        collection1.addSeries(botSeries);
+//        collection1.addSeries(pairSeries);
+//
+//        JFreeChart chart1 = ChartFactory.createScatterPlot(
+//                "Положение цветов и выбранная пара",
+//                "Цвет", "",
+//                collection1,
+//                PlotOrientation.VERTICAL, false, true, false);
+//
+//        XYPlot plot1 = chart1.getXYPlot();
+//        XYLineAndShapeRenderer renderer1 = new XYLineAndShapeRenderer();
+//        renderer1.setSeriesLinesVisible(0, false);
+//        renderer1.setSeriesShapesVisible(0, true);
+//        renderer1.setSeriesLinesVisible(1, false);
+//        renderer1.setSeriesShapesVisible(1, true);
+//        renderer1.setSeriesLinesVisible(2, true);
+//        renderer1.setSeriesShapesVisible(2, false);
+//        renderer1.setSeriesPaint(2, Color.RED);
+//        renderer1.setSeriesStroke(2, new BasicStroke(2.0f));
+//        plot1.setRenderer(renderer1);
+//
+//        // Второй график: галочка для фиксированного i = bestTopIdx
+//        XYSeries diffSeries = new XYSeries("|top[i] - bot[j]| при i=" + tops[bestTopIdx]);
+//        int fixedTop = tops[bestTopIdx];
+//        for (int j = 0; j < bots.length; j++) {
+//            diffSeries.add(j, Math.abs(fixedTop - bots[j]));
+//        }
+//        // Отметим точку найденного минимума
+//        XYSeries minPoint = new XYSeries("Минимум (j=" + bestBotIdx + ")");
+//        minPoint.add(bestBotIdx, Math.abs(fixedTop - bots[bestBotIdx]));
+//
+//        XYSeriesCollection collection2 = new XYSeriesCollection();
+//        collection2.addSeries(diffSeries);
+//        collection2.addSeries(minPoint);
+//
+//        JFreeChart chart2 = ChartFactory.createXYLineChart(
+//                "График 'галочка' разности",
+//                "Индекс j", "Разность",
+//                collection2,
+//                PlotOrientation.VERTICAL, false, true, false);
+//
+//        XYPlot plot2 = chart2.getXYPlot();
+//        XYLineAndShapeRenderer renderer2 = new XYLineAndShapeRenderer();
+//        renderer2.setSeriesShapesVisible(0, false);
+//        renderer2.setSeriesLinesVisible(0, true);
+//        renderer2.setSeriesShapesVisible(1, true);
+//        renderer2.setSeriesLinesVisible(1, false);
+//        renderer2.setSeriesPaint(1, Color.RED);
+//        plot2.setRenderer(renderer2);
+//
+//        // Размещаем оба графика в одном окне вертикально
+//        JPanel panel = new JPanel(new GridLayout(2, 1));
+//        panel.add(new ChartPanel(chart1));
+//        panel.add(new ChartPanel(chart2));
+//
+//        JFrame frame = new JFrame("Визуализация задачи о майках и штанах");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.add(panel);
+//        frame.pack();
+//        frame.setSize(800, 600);
+//        frame.setLocationRelativeTo(null);
+//        frame.setVisible(true);
+//    }
 }
