@@ -45,6 +45,8 @@ public class Main {
 
         Arrays.sort(tasks);
         long sum = 0;
+//        PriorityQueue в Java — это реализация очереди с приоритетом, основанная на бинарной куче.
+//        По умолчанию она работает как min‑heap (наименьший элемент находится на вершине и извлекается первым).
         Queue<Integer> pq = new PriorityQueue<>();
         for (int i = 0; i < n; i++) {
             pq.add(tasks[i].getWeight());
