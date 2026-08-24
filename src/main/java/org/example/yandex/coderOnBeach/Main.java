@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Задача: "Минимальная непохожесть лежаков"
@@ -50,9 +51,9 @@ public class Main {
         for (int i = 0; i < tCount; i++) {
             int n = Integer.parseInt(reader.readLine());
             Test test = new Test(n);
-            String[] elems = reader.readLine().split(" ");
+            StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
             for (int j = 0; j < n; j++) {
-                test.addSunbead(new Sunbead(Integer.parseInt(elems[j])));
+                test.addSunbead(new Sunbead(Integer.parseInt(tokenizer.nextToken())));
             }
             test.sort();
             tests.add(test);
