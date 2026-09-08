@@ -4,6 +4,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.example.yandex.nod_nok.Main.nod;
+import static org.example.yandex.nod_nok.Main.nok;
+
 /**
  * Во всех крупных IT-компаниях немалое внимание уделяется вопросам информационной безопасности, и Яндекс не является исключением.
  * <p>
@@ -38,55 +41,66 @@ public class Main {
 
         int nod = Integer.parseInt(reader.readLine());
         int nok = Integer.parseInt(reader.readLine());
-        System.out.println("НОД"+nod(nod, nok));
-        System.out.println("НОК"+nok(nod, nok));
+        int a = calc(nod * nok, Math.max(nod, nok) - 1);
+        System.out.println("a = " + a + " b= " + nod * nok / a);
 
         reader.close();
         writer.close();
     }
-    public static int nod(int a, int b) {
-        List<Integer> listA = factorize(a);
-        List<Integer> listB = factorize(b);
-        List<Integer> result = new ArrayList<>();
 
-        for (int i = 0; i < listA.size(); i++) {
-            int x = listA.get(i);
-            if (listB.contains(x)) {
-                result.add(x);
-                listB.remove(Integer.valueOf(x));
-            }
+
+    public static int calc(int ab, int a) {
+        if (ab % a != 0) {
+            return calc(ab, a - 1);
         }
-
-
-        int nodValue = 1;
-        for (int num : result) {
-            nodValue *= num;
-        }
-        return nodValue;
+        int b = ab / a;
+        return ab / a;
     }
-    public static int nok(int a, int b) {
-        List<Integer> listA = factorize(a);
-        List<Integer> listB = factorize(b);
-        List<Integer> result = new ArrayList<>();
 
-        result.addAll(listA);
-        result.addAll(listB);
-
-        // Удаляем общие множители (по одному вхождению каждого)
-        for (int i = 0; i < listA.size(); i++) {
-            int x = listA.get(i);
-            if (listB.contains(x)) {
-                result.remove(Integer.valueOf(x));   // удаляем одну такую цифру из объединения
-                listB.remove(Integer.valueOf(x));    // удаляем из listB, чтобы не учитывать повторно
-            }
-        }
-
-        int nokValue = 1;
-        for (int num : result) {
-            nokValue *= num;
-        }
-        return nokValue;
-    }
+//    public static int nod(int a, int b) {
+//        List<Integer> listA = factorize(a);
+//        List<Integer> listB = factorize(b);
+//        List<Integer> result = new ArrayList<>();
+//
+//        for (int i = 0; i < listA.size(); i++) {
+//            int x = listA.get(i);
+//            if (listB.contains(x)) {
+//                result.add(x);
+//                listB.remove(Integer.valueOf(x));
+//            }
+//        }
+//
+//
+//        int nodValue = 1;
+//        for (int num : result) {
+//            nodValue *= num;
+//        }
+//        return nodValue;
+//    }
+//
+//    public static int nok(int a, int b) {
+//        List<Integer> listA = factorize(a);
+//        List<Integer> listB = factorize(b);
+//        List<Integer> result = new ArrayList<>();
+//
+//        result.addAll(listA);
+//        result.addAll(listB);
+//
+//        // Удаляем общие множители (по одному вхождению каждого)
+//        for (int i = 0; i < listA.size(); i++) {
+//            int x = listA.get(i);
+//            if (listB.contains(x)) {
+//                result.remove(Integer.valueOf(x));   // удаляем одну такую цифру из объединения
+//                listB.remove(Integer.valueOf(x));    // удаляем из listB, чтобы не учитывать повторно
+//            }
+//        }
+//
+//        int nokValue = 1;
+//        for (int num : result) {
+//            nokValue *= num;
+//        }
+//        return nokValue;
+//    }
 
     private static List<Integer> factorize(int n) {
         List<Integer> factors = new ArrayList<>();
