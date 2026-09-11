@@ -34,28 +34,49 @@ import static org.example.yandex.nod_nok.Main.nok;
  * НОК (наименьшим общим кратным) двух натуральных чисел p и q называется наименьшее число k такое, что k делится на p и k делится на q. Например, НОК(2, 3) равен 6, а НОК(10, 20) равен 20.
  */
 public class Main {
-
+    //todo: Задачу так и не решил. Не понял доказательства решения
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int nod = Integer.parseInt(reader.readLine());
         int nok = Integer.parseInt(reader.readLine());
-        int a = calc(nod * nok, Math.max(nod, nok) - 1);
+        int a = calc(nok / nod, nod, nok, 0);
         System.out.println("a = " + a + " b= " + nod * nok / a);
-
+        int counter = show(Math.max(a, nok * nod / a), Math.min(nok * nod / a, a), nod, nok);
+        System.out.println(counter);
         reader.close();
         writer.close();
     }
 
 
-    public static int calc(int ab, int a) {
-        if (ab % a != 0) {
-            return calc(ab, a - 1);
+    public static int calc(int a, int nod, int nok, int counter) {
+        if (nod * nok % a == 0 && (nod(nok * nok / a, a) == nod)) {
+            return a;
         }
-        int b = ab / a;
-        return ab / a;
+        return calc(++a, nod, nok, counter + 1);
     }
+
+    public static int show(int a, int b, int nod, int nok) {
+        int counter = 0;
+        //int newNod = ;
+        while (nod(a, b) == nod && nok(a, b) == nok) {
+            System.out.println("nod = " + nod + " newNod = " + nod(a, b));
+            int temp = b;
+            b = a - b;
+            a = temp;
+            counter+=2;
+        }
+        return counter;
+    }
+
+//    public static int calc(int ab, int a) {
+//        if (ab % a != 0) {
+//            return calc(ab, a - 1);
+//        }
+//        int b = ab / a;
+//        return ab / a;
+//    }
 
 //    public static int nod(int a, int b) {
 //        List<Integer> listA = factorize(a);
