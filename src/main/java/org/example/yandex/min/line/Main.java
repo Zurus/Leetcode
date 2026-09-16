@@ -2,7 +2,6 @@ package org.example.yandex.min.line;
 
 import java.io.*;
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.StringTokenizer;
 
@@ -71,6 +70,22 @@ public class Main {
             //solveTask(nums, k, cycleCount);
             Deque<Integer> deque = new ArrayDeque<>();
 
+            for (int i = 0; i < nums.length; i++) {
+                while (!deque.isEmpty() && nums[i] <= nums[deque.peekLast()]) {
+                    deque.pollLast();
+                }
+
+                deque.addLast(i);
+                if (deque.peekFirst() <= i - k) {
+                    deque.pollFirst();
+                }
+
+                if (i >= k - 1) {
+                    System.out.println(nums[deque.peekFirst()]);
+                }
+            }
+
+
             /*
             Что делать на каждом шаге
 Для каждого числа a[i] по порядку:
@@ -91,47 +106,11 @@ public class Main {
              */
 
 
-            for (int i = 0; i < n; i++) {
-                // Чистим хвост: пока последний элемент очереди >= nums[i],
-                // он бесполезен — nums[i] меньше и стоит правее.
-                popBack(deque, nums, nums[i]);
-
-                // Кладём текущий индекс в хвост.
-                deque.addLast(i);
-
-                // Убираем голову, если она вышла за левую границу окна.
-                popFront(deque, i, k);
-
-                // Окно сформировалось — минимум лежит в голове.
-                if (i >= k - 1) {
-                    writer.write(Integer.toString(nums[deque.peekFirst()]));
-                    writer.newLine();
-                }
-            }
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-
-    /**
-     * Убирает с хвоста очереди индексы, значения по которым >= value.
-     */
-    public static void popBack(Deque<Integer> deque, int[] nums, int value) {
-        while (!deque.isEmpty() && nums[deque.peekLast()] >= value) {
-            deque.pollLast();
-        }
-    }
-
-    /**
-     * Убирает голову очереди, если её индекс вышел за пределы окна [i - k + 1, i].
-     */
-    public static void popFront(Deque<Integer> deque, int i, int k) {
-        if (!deque.isEmpty() && deque.peekFirst() <= i - k) {
-            deque.pollFirst();
-        }
-    }
 
     public static int solveDeque(int[] array, int startIdx, int len) {
         //int[] deque = new int[n];
